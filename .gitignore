@@ -1,0 +1,11 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Java y Maven
+**/target/
+*.class
+
+# Archivos privados
+.env
+.env.*

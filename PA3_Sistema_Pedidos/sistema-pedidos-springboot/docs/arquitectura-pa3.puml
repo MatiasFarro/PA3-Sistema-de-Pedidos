@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+actor Usuario
+rectangle "Navegador / Cliente HTTP" as browser
+rectangle "Spring Security\nAutenticación / roles / CSRF" as security
+rectangle "DispatcherServlet" as dispatcher
+rectangle "PedidoReporteWebController\n@Controller + Model" as mvc
+rectangle "PedidoReporteController\n@RestController + JSON" as rest
+rectangle "PedidoReporteService / Impl" as service
+rectangle "PedidoRepository\nSpring Data JPA" as jpa
+rectangle "PedidoReporteJdbcRepository\nNamedParameterJdbcTemplate" as jdbc
+database "MySQL\nTabla pedido" as mysql
+rectangle "InventarioRestClient\nHTTP" as client
+rectangle "inventario-service\nJakarta EE" as inventory
+Usuario --> browser
+browser --> security
+security --> dispatcher
+dispatcher --> mvc : GET /reportes/pedidos
+dispatcher --> rest : GET /api/v1/pedidos/**
+mvc --> service
+rest --> service
+service --> jpa : operaciones existentes
+service --> jdbc : reportes PA3
+jpa --> mysql
+jdbc --> mysql
+service --> client : registrar pedido
+client --> inventory
+@enduml
